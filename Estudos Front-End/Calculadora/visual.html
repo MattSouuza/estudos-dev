@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadora</title>
+</head>
+
+<body>
+    <table class="table-keyboard">
+        <thead>
+            <tr>
+                <td id="result"></td>
+            </tr>
+            
+            <tr>
+                <td id="operation"></td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr class="line-one">
+                <td><button>7</button></td>
+                <td><button>8</button></td>
+                <td><button>9</button></td>
+                <td><button class="operators">-</button></td>
+                <td><button class="operators">/</button></td>
+            </tr>
+
+            <tr class="line-two">
+                <td><button>4</button></td>
+                <td><button>5</button></td>
+                <td><button>6</button></td>
+                <td rowspan="2" class="operators"><button>+</button></td>
+                <td><button class="operators">x</button></td>
+            </tr>
+
+            <tr class="line-three">
+                <td><button>1</button></td>
+                <td><button>2</button></td>
+                <td><button>3</button></td>
+                <td><button class="operators">%</button></td>
+            </tr>
+
+            <tr class="line-four">
+                <td><button>0</button></td>
+                <td><button>,</button></td>
+                <td><button>C</button></td>
+                <td colspan="2"><button id="equals">=</button></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
