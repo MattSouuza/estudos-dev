@@ -1,0 +1,33 @@
+
+				  Debugging No Visual Studio
+
+			*Creio que no VsCode não seja muito diferente.
+
+	- Breakpoint: é a linha que começará o debug, os códigos acima do breakpoint
+	serão executados normalmente, a partir do breakpoint, aí sim o resto do código
+	será lido passo a passo.
+
+				  	    Teclas
+	
+	- Para marcar ou desmarcar um breakpoint, usa-se a tecla F9;
+
+	- Para iniciar ou continuar o debug, usa-se a tecla F5;
+
+	- Para executar passo a passo o código (pulando os métodos), usa-se a tecla F10;
+
+	- Para executar passo a passo o código (entrando nos métodos), usa-se a tecla F11;
+
+	- Para sair de um método em execução, usa-se SHIFT + F11;
+
+	- Para sair do debug, usa-se SHIFT + F5.
+
+					    Janelas
+
+	- Watch: Expressões personalizadas;
+
+	- Autos: Expressões 'importantes' detectadas pelo VS;
+
+	-Locals: Todas as variáveis locais (que estão no escopo onde o código está sendo
+	executado no momento).
+
+	

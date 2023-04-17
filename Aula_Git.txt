@@ -1,0 +1,21 @@
+Git log - Mostra todos os caminhos feitos
+
+git diff - é um git status, porém mais forte 
+
+git revert - ele exclui um commit que foi efetuado e atualiza sua branch
+
+git reset soft(git reset ja vem no modo soft) ele volta um commit que não foi feito um push
+
+git reset --Hard ele volta atras atras e deleta o commit feito 
+
+cat (Nome do arquivo) - busca um arquivo especifico e suas informações
+
+git branch - visualiza a brach que você esta
+
+git branch (Nome da branch que vc quer criar) - cria uma nova branch
+
+git branch -d (nome da branch que você quer excluir) - exclui uma branch
+
+git checkout (nome da branch) - muda para a branch que deseja 
+
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadora</title>
+</head>
+
+<body class="content-calc">
+    <div class="phone">
+        <div class="calc">
+            <div id="output">
+
+            </div>
+
+            <div id="operation">
+
+            </div>
+
+            <div class="keys">
+                <button class="key operator" onclick="addOperator('+')">+</button>
+                <button class="key operator" onclick="addOperator('-')">-</button>
+                <button class="key operator" onclick="addOperator('*')">&times;</button>
+                <button class="key operator" onclick="addOperator('/')">&divide;</button>
+                <button class="key" onclick="addNumber(7)">7</button>
+                <button class="key" onclick="addNumber(8)">8</button>
+                <button class="key" onclick="addNumber(9)">9</button>
+                <button class="key" onclick="addNumber(4)">4</button>
+                <button class="key" onclick="addNumber(5)">5</button>
+                <button class="key" onclick="addNumber(6)">6</button>
+                <button class="key" onclick="addNumber(1)">1</button>
+                <button class="key" onclick="addNumber(2)">2</button>
+                <button class="key" onclick="addNumber(3)">3</button>
+                <button class="key" onclick="addNumber(0)">0</button>
+                <button class="key" onclick="addComma(',')">,</button>
+                <button class="key" onclick="removeCharacterFromOperation()">C</button>
+                <button class="key enter" onclick="calculate()">=</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="script.js"></script>
+
+</html>
