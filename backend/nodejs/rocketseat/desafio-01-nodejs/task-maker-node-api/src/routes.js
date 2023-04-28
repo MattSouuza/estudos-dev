@@ -13,9 +13,9 @@ export const routes = [
             const { search } = req.query;
 
             try {
-                return res.end(JSON.stringify(context.select(search ? { title: search } : null)))
+                return res.end(JSON.stringify({ response: context.select(search ? { title: search } : null) }))
             } catch (error) {
-                return res.writeHead(400).end(JSON.stringify({ errorMessage: `A error has occoured while trying to list all tasks: ${error}` }))
+                return res.writeHead(400).end(JSON.stringify({ message: `A error has occoured while trying to list all tasks: ${error}` }))
             }
         }
     },
@@ -25,8 +25,10 @@ export const routes = [
         handler: (req, res) => {
             const { title, description } = req.body;
 
+            let newTask = {};
+
             try {
-                context.insert({
+                newTask = context.insert({
                     id: randomUUID(),
                     title,
                     description,
@@ -37,10 +39,10 @@ export const routes = [
             } catch (error) {
                 console.log("A error has occoured while trying to create a task!", error);
 
-                return res.writeHead(400).end(JSON.stringify({ errorMessage: `A error has occoured while trying to create a task: ${error}` }));
+                return res.writeHead(400).end(JSON.stringify({ message: `A error has occoured while trying to create a task: ${error}` }));
             }
 
-            return res.writeHead(201).end();
+            return res.writeHead(200).end(JSON.stringify({message: "Task created!", response: newTask}));
         }
     },
     {
@@ -50,38 +52,77 @@ export const routes = [
             const { id } = req.params;
             const { title, description } = req.body;
 
-            if (!id) {
-                return res.writeHead(400).end(JSON.stringify({ errorMessage: `The task ID must be provided to continue this operation!` }));
-            }
+            let updatedTask = {};
 
             try {
-                context.update(id, {
+                updatedTask = context.update(id, {
                     title,
                     description
                 })
             } catch (error) {
                 if (error instanceof TaskNotFound) {
-                    return res.writeHead(404).end(JSON.stringify({ errorMessage: error.message }));
+                    return res.writeHead(404).end(JSON.stringify({ message: error.message }));
                 }
 
-                return res.writeHead(400).end(JSON.stringify({ errorMessage: `The following error occoured while trying to update the task with ID '${id}': ${error}`}));
+                return res.writeHead(400).end(JSON.stringify({ message: `The following error occoured while trying to update this task: ${error}` }));
             }
 
-            return res.writeHead(200).end(JSON.stringify({ message: "Task successfully updated!"}));
+            return res.end(JSON.stringify({ message: "Task updated!", response: updatedTask }));
         }
     },
     {
         method: "DELETE",
         path: routePathBuilder("/task/:id"),
         handler: (req, res) => {
+            const { id } = req.params;
 
+            try {
+                context.delete(id)
+            } catch (error) {
+                if (error instanceof TaskNotFound) {
+                    return res.writeHead(404).end(JSON.stringify({ message: error.message }));
+                }
+
+                return res.writeHead(400).end(JSON.stringify({ message: `The following error occoured while trying to delete this task: ${error}` }));
+            }
+
+            return res.writeHead(200).end({ message: `Task deleted!`});
         }
     },
     {
         method: "PATCH",
         path: routePathBuilder("/task/:id/complete"),
         handler: (req, res) => {
+            const { id } = req.params;
 
+            try {
+                context.completeTask(id);
+            } catch (error) {
+                if (error instanceof TaskNotFound) {
+                    return res.writeHead(404).end(JSON.stringify({ message: error.message }));
+                }
+
+                return res.writeHead(400).end(JSON.stringify({ message: `The following error occoured while trying to complete this task: ${error}` }));
+            }
+
+            return res.writeHead(200).end(JSON.stringify({message: "Task completed!"}));
         }
     },
+    {
+        method: "GET",
+        path: routePathBuilder("/task/:id"),
+        handler: (req, res) => {
+            const { id } = req.params;
+
+            try {
+                return res.end(JSON.stringify({ response: context.searchById(id) }));
+            } catch (error) {
+                if (error instanceof TaskNotFound) {
+                    return res.writeHead(404).end(JSON.stringify({ message: error.message }));
+                }
+
+                return res.writeHead(400).end(JSON.stringify({ message: `The following error occoured while trying to list this task: ${error}` }));
+            }
+        }
+    }
 ]

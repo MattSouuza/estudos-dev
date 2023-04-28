@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import { TaskNotFound } from '../utils/error-models/task-not-found.js';
-import { create } from 'node:domain';
 
 const databasePath = new URL("db.json", import.meta.url);
 
@@ -45,13 +44,15 @@ export default class Context {
 
         this.#database.push(newTask);
         this.#persist();
+
+        return newTask;
     }
 
     update(id, { title, description }) {
-        const { searchedTask, taskIndex } = this.selectByTaskId(id);
+        const { searched_task: searchedTask, task_index: taskIndex } = this.searchById(id);
 
         if (!title && !description) {
-            throw new Error("The title or description must be provided in order to update the task!");
+            throw new Error("The title and description must be provided in order to update the task!");
         }
 
         const newTask = {
@@ -64,15 +65,31 @@ export default class Context {
 
         this.#database[taskIndex] = { id, ...newTask };
         this.#persist();
+
+        return this.#database[taskIndex];
     }
 
-    selectByTaskId(id) {
+    delete(id) {
+        const { task_index: taskIndex } = this.searchById(id);
+
+        this.#database.splice(taskIndex, 1);
+        this.#persist();
+    }
+
+    completeTask(id) {
+        const { task_index: taskIndex } = this.searchById(id);
+
+        this.#database[taskIndex].completed_at = new Date();
+        this.#persist();
+    }
+
+    searchById(id) {
         const taskIndex = this.#database.findIndex(row => row.id === id);
 
         if (taskIndex === -1) {
-            throw new TaskNotFound(`The task with the following ID: '${id}', wasn't found!`);
+            throw new TaskNotFound(`The task with the ID provided wasn't found!`);
         }
 
-        return { searchedTask: this.#database[taskIndex], taskIndex };
+        return { searched_task: this.#database[taskIndex], task_index: taskIndex };
     }
 }
